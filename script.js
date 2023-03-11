@@ -1,72 +1,134 @@
 'use strict'
 
+function newRoundMessage(newMsg) {
+    let currentMessage = document.querySelector("#current-round")
+    currentMessage.textContent = "Current Round: " + newMsg
+}
+
 function getComputerChoice() {
-    let moves = ['Rock', 'Paper', 'Scissors']
+    let moves = ['rock', 'paper', 'scissors']
     return moves[Math.floor(Math.random() * 3)]
 }
 
+function playerWinsRound(scores) {
+    let playerScore = document.querySelector("#player-score")
+    playerScore.textContent = scores[0] + 1
+}
+
+function computerWinsRound(scores) {
+    let computerScore = document.querySelector("#computer-score")
+    computerScore.textContent = scores[1] + 1
+}
+
+function chooseMove() {
+    playRound(this.getAttribute("id"))
+}
+
+function activateButtons () {
+    let moves = document.querySelectorAll(".button");
+    moves.forEach(function(move) {
+        move.addEventListener('click', chooseMove);
+    });
+}
+
+function disableButtons () {
+    let moves = document.querySelectorAll(".button");
+    moves.forEach(function(move) {
+        move.removeEventListener('click', chooseMove);
+    });
+}
+
+function newGame () {
+    scores = [0, 0]
+    document.querySelector("#computer-score").textContent = 0;
+    document.querySelector("#player-score").textContent = 0;
+    activateButtons();
+    newRoundMessage('-------');
+    let gameResult = document.querySelector(".winner");
+
+        gameResult.textContent = '-------';
+
+}
+
+
+// Index 0: Player
+// Index 1: Computer
+let scores = [0, 0];
+
 function playRound(playerSelection, computerSelection = getComputerChoice()) {
-    playerSelection = playerSelection.toLowerCase()
-    computerSelection = computerSelection.toLowerCase()
 
     // If player chooses rock
     if (playerSelection === 'rock') {
         if (computerSelection === 'paper') {
-            console.log('You Lose! Paper Beats Rock')
-            return 1
+            newRoundMessage('You Lose! Paper Beats Rock');
+            computerWinsRound(scores);
+            scores[1]++;
+
         } else if (computerSelection === 'scissors') {
-            console.log('You Win! Rock beats Scissors')
-            return 0
+            newRoundMessage('You Win! Rock beats Scissors');
+            playerWinsRound(scores);
+            scores[0]++;
+
         } else {
-            console.log(`It's a Tie!`)
+            newRoundMessage(`It's a Tie!`);
 
         }
     }
     // If player chooses paper
     if (playerSelection === 'paper') {
         if (computerSelection === 'scissors') {
-            console.log('You Lose! Scissors beat Paper')
-            return 1
+            newRoundMessage('You Lose! Scissors beat Paper');
+            computerWinsRound(scores);
+            scores[1]++;
+            
         } else if (computerSelection === 'rock') {
-            console.log('You Win! Paper beats Rock')
-            return 0
-        } else {
-            console.log(`It's a Tie!`)
+            newRoundMessage('You Win! Paper beats Rock');
+            playerWinsRound(scores);
+            scores[0]++;
 
+        } else {
+            newRoundMessage(`It's a Tie!`);
         }
     }
     // If player chooses scissors
     if (playerSelection === 'scissors') {
         if (computerSelection === 'rock') {
-            console.log('You Lose! Rock beats Scissors')
-            return 1
+            newRoundMessage('You Lose! Rock beats Scissors');
+            computerWinsRound(scores);
+            scores[1]++;
+
         } else if (computerSelection === 'paper') {
-            console.log('You Win! Scissors beats Paper')
-            return 0
+            newRoundMessage('You Win! Scissors beats Paper');
+            playerWinsRound(scores);
+            scores[0]++;
+
         } else {
-            console.log(`It's a Tie!`)
+            newRoundMessage(`It's a Tie!`);
 
         }
     }
-}
 
-function game() {
-    // Score at index 0: Player
-    // Score at index 1: Computer
-    let scores = [0, 0]
-
-    // Loop iterates 5 times, meaning 5 rounds.
-    for (let i = 0; i < 5; i++) {
-        let playerMove = prompt('What move do you choose?')
-        let winner = playRound(playerMove, getComputerChoice())
-        scores[winner]++
-    }
-    if (scores[0] > scores[1]) {
-        console.log(`PLAYER WINS THE GAME!`)
-    } else if (scores[1] > scores[0]) {
-        console.log(`COMPUTER WINS THE GAME!`)
-    } else {
-        console.log(`THE GAME ENDS IN TIE`)
+    if (scores[0] + scores[1] === 5) {
+        let gameResult = document.querySelector(".winner");
+        // Check scores
+            if (scores[0] > scores[1]) {
+            gameResult.textContent = 'Player Wins!';
+        } else if (scores[1] > scores[0]) {
+            gameResult.textContent = 'Computer WIns!';
+        } else {
+            gameResult.textContent = 'Tie!';
+        }
+        disableButtons();
+        
     }
 
+
 }
+
+let newGameBtn = document.querySelector('.new-game');
+newGameBtn.addEventListener('click', newGame)
+
+newGame();
+
+
+

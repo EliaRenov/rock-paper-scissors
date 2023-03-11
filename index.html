@@ -4,10 +4,55 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="script.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
     <title>Rock Paper Scissors</title>
 </head>
 <body>
+    <button class="new-game">New Game</button>
+    <h1 class="header">Rock Paper Scissors</h1>
+
+    <div class="players">
+        <div class="player-box">
+            <div class="name">
+                Player
+            </div>
+            <div id="player-score">
+                0
+            </div>
+        </div>
+
+        <div id="computer-box">
+            <div class="name">
+                Computer
+            </div>
+            <div id="computer-score">
+                0
+            </div>
+        </div>
+
+
+    </div>
+
+
+    <div class="moves">
+    <button class="button" id="rock">
+        <img src="images/rock.png" alt="Rock icon" height="200px" width="200px">
+    </button>
+    <button class="button" id="paper">
+        <img src="images/paper.png" alt="Paper icon" height="200px" width="200px">
+    </button>
+    <button class="button" id="scissors">
+        <img src="images/scissors.png" alt="Scissors icon" height="200px" width="200px">
+    </button>
+    </div>
+
+    <div id="current-round">Current Round: start playing...</div>
     
+
+    
+    <div class="winner">
+        Game ongoing...
+    </div>
 </body>
 </html>
